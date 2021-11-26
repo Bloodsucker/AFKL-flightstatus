@@ -1,0 +1,103 @@
+<div id="booking-detail" class="container-fluid">
+    <div class="row">
+        <h2>Booking details</h2>
+        <ng-container *ngIf="booking$ | async as b; else loadingOrError">
+            <div class="col-lg-8" id="booking-detail-body">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-6">
+                            <table id="contact-table">
+                                <tr>
+                                    <th>Booking reference</th>
+                                    <td>{{b.bookingCode}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact passenger</th>
+                                    <td>{{b.passengers.title.name}} {{b.passengers.firstName}} {{b.passengers.lastName}}</td>
+                                </tr>
+                                <tr *ngFor="let contact of b.contactDetails">
+                                    <ng-container *ngIf="contact['@class'] == 'EmailAddress'">
+                                        <th>Contact email</th>
+                                        <td>{{contact.address}}</td>
+                                    </ng-container>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="container accordion accordion-flush">
+                        <div class="row connection accordion-item" *ngFor="let connection of b.itinerary.connections; index as i">
+                            <div class="row accordion-header">
+                                <div class="col-lg-2">
+                                    <button class="accordion-button col-1 collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" >
+                                    More
+                                    </button>
+                                </div>
+                                <div class="col-lg-3 origin">
+                                    <p class="airport">{{connection.origin.name}} ({{connection.origin.IATACode}})</p>
+                                    <p class="city">{{connection.origin.city.name}}</p>
+                                </div>
+                                <div class="col-lg-1 icon">
+                                    <i class="fa fa-plane" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-lg-3 destination">
+                                    <p class="airport">{{connection.destination.name}} ({{connection.destination.IATACode}})</p>
+                                    <p class="city">{{connection.destination.city.name}}</p>
+                                </div>
+                                <div class="col-lg-3 flight-code">
+                                    <p>{{connection.segments[i].marketingFlight.carrier.code}} {{connection.segments[i].marketingFlight.number}}</p>
+                                </div>
+                            </div>
+                            <div [id]="'collapse' + i" class="accordion-collapse collapse">
+                                <div class="row details accordion-body">
+                                    <div class="col-lg-2">
+                                        <p class="item-header">Date</p>
+                                        <p class="item-value">{{connection.segments[i].marketingFlight.operatingFlight.localScheduledDeparture | date: 'dd MMM yyyy'}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="item-header">Boarding</p>
+                                        <p class="item-value">{{connection.segments[i].marketingFlight.operatingFlight.localCheckInEnd | date: 'hh:mm'}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="item-header">Boarding</p>
+                                        <p class="item-value">{{connection.segments[i].marketingFlight.operatingFlight.localScheduledDeparture | date: 'hh:mm'}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="item-header">Gate</p>
+                                        <p class="item-value">--</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="item-header">Seat</p>
+                                        <p class="item-value">--</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="item-header">Travel Class</p>
+                                        <p class="item-value" *ngIf="connection.segments[i].marketingFlight.sellingClass.code == 'Z'; else isClassUnknown">Business</p>
+                                        <ng-template #isClassUnknown>
+                                            <p class="item-value">--</p>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row operated-by">
+                                <p>OPERATED BY <span class="by">{{connection.segments[i].marketingFlight.carrier.name}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #loadingOrError>
+            <div *ngIf="isBookingUnknown | async; else loading" class="col-12">
+                <h3>Error retrieving your booking.</h3>
+                <p>The booking data does not match our database. Please go back and verify your booking data is correct.</p>
+            </div>
+            <ng-template #loading>
+                <div class="d-flex justify-content-center loading">
+                    <div class="spinner-grow text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                </div>
+            </ng-template>
+        </ng-template>
+    </div>
+</div>

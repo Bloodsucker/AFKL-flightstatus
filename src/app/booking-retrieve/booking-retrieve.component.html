@@ -1,0 +1,46 @@
+<div class="container-fluid" id="booking-retrieve">
+    <h2>Check-in</h2>
+    <div class="container" id="booking-retrieve-body">
+        <div class="container" id="booking-retrieve-description">
+            <p class="subtitle">Retrieve your booking</p>
+            <hr class="mx-auto col-1 divider" />
+            <p class="description">You can find your booking by filling out your family name and the booking code in your booking confirmation.</p>
+        </div>
+        <div class="row">
+            <form class="form-row" id="booking-retrieve-form" [formGroup]="bookingForm" (submit)="onSubmit()">
+                <div class="mb-3">
+                    <label for="bookingCode" class="form-label">Booking code</label>
+                    <input
+                        [class.is-invalid]="bookingForm.controls['bookingCode'].invalid && bookingForm.controls['bookingCode'].touched"
+                        [class.is-valid]="bookingForm.controls['bookingCode'].valid && bookingForm.controls['bookingCode'].touched"
+                        required
+                        pattern="[a-zA-Z2-9]*"
+                        minlength="5"
+                        maxlength="6"
+                        type="text"
+                        class="form-control"
+                        id="bookingCode"
+                        formControlName="bookingCode">
+                  </div>
+                  <div class="mb-3">
+                    <label for="familyName" class="form-label">Family Name</label>
+                    <input
+                        [class.is-invalid]="bookingForm.controls['familyName'].invalid && bookingForm.controls['familyName'].touched"
+                        [class.is-valid]="bookingForm.controls['familyName'].valid && bookingForm.controls['familyName'].touched"
+                        required
+                        minlength="2"
+                        maxlength="30"
+                        type="text"
+                        class="form-control"
+                        id="familyName"
+                        formControlName="familyName">
+                  </div>
+    
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary" [disabled]="!bookingForm.valid">Retrieve booking</button>
+                  </div>
+            </form>
+        </div>
+    </div>
+
+</div>
