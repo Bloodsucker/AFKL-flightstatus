@@ -29,8 +29,12 @@
 #booking-detail-body .connection {
     margin-top: 30px;
     padding: 20px 0px 0px;
-    border-top: 2px solid #439EDB;
     border-bottom: 2px solid #439EDB;
+    margin-top: 0;
+}
+
+#booking-detail-body .connection:first-child {
+    border-top: 2px solid #439EDB;
 }
 
 #booking-detail-body .connection .airport {

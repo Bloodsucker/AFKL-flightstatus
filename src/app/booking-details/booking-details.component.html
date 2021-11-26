@@ -44,22 +44,22 @@
                                     <p class="city">{{connection.destination.city.name}}</p>
                                 </div>
                                 <div class="col-lg-3 flight-code">
-                                    <p>{{connection.segments[i].marketingFlight.carrier.code}} {{connection.segments[i].marketingFlight.number}}</p>
+                                    <p>{{connection.segments[0].marketingFlight.carrier.code}} {{connection.segments[0].marketingFlight.number}}</p>
                                 </div>
                             </div>
-                            <div [id]="'collapse' + i" class="accordion-collapse collapse">
+                            <div [attr.id]="'collapse' + i" class="accordion-collapse collapse">
                                 <div class="row details accordion-body">
                                     <div class="col-lg-2">
                                         <p class="item-header">Date</p>
-                                        <p class="item-value">{{connection.segments[i].marketingFlight.operatingFlight.localScheduledDeparture | date: 'dd MMM yyyy'}}</p>
+                                        <p class="item-value">{{connection.segments[0].marketingFlight.operatingFlight.localScheduledDeparture | date: 'dd MMM yyyy'}}</p>
                                     </div>
                                     <div class="col-lg-2">
                                         <p class="item-header">Boarding</p>
-                                        <p class="item-value">{{connection.segments[i].marketingFlight.operatingFlight.localCheckInEnd | date: 'hh:mm'}}</p>
+                                        <p class="item-value">{{connection.segments[0].marketingFlight.operatingFlight.localCheckInEnd | date: 'hh:mm'}}</p>
                                     </div>
                                     <div class="col-lg-2">
                                         <p class="item-header">Boarding</p>
-                                        <p class="item-value">{{connection.segments[i].marketingFlight.operatingFlight.localScheduledDeparture | date: 'hh:mm'}}</p>
+                                        <p class="item-value">{{connection.segments[0].marketingFlight.operatingFlight.localScheduledDeparture | date: 'hh:mm'}}</p>
                                     </div>
                                     <div class="col-lg-2">
                                         <p class="item-header">Gate</p>
@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="col-lg-2">
                                         <p class="item-header">Travel Class</p>
-                                        <p class="item-value" *ngIf="connection.segments[i].marketingFlight.sellingClass.code == 'Z'; else isClassUnknown">Business</p>
+                                        <p class="item-value" *ngIf="connection.segments[0].marketingFlight.sellingClass.code == 'Z'; else isClassUnknown">Business</p>
                                         <ng-template #isClassUnknown>
                                             <p class="item-value">--</p>
                                         </ng-template>
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="row operated-by">
-                                <p>OPERATED BY <span class="by">{{connection.segments[i].marketingFlight.carrier.name}}</span></p>
+                                <p>OPERATED BY <span class="by">{{connection.segments[0].marketingFlight.carrier.name}}</span></p>
                             </div>
                         </div>
                     </div>
