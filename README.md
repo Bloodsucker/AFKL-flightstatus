@@ -5,7 +5,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## TL;DR check this repo
 1. Make sure you have installed Angular 13+
 2. Clone the repo
-3. Run: `$ ng serve`
+3. Run: `$ npm install`
+4. Run: `$ ng serve`
 
 ## Development server
 
